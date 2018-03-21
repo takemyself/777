@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/small-login.css">
+    <link rel="stylesheet" href="css/jquery.idcode.css">
+</head>
+<body>
+<!--小的登录-->
+<div class="small-motai visible-xs">
+    <header>
+        <a href="" class="fl">返回</a>
+        <span>用户登录</span>
+    </header>
+    <p style="width:100%;height:13px;background:#eaeaea; opacity:0.8;filter:Alpha(opacity=80);"></p>
+    <div class="small-top">
+        <ul>
+            <li class="small-motai-li">普通登录</li>
+            <li>手机动态登录</li>
+        </ul>
+    </div>
+    <div style="display: block;" class="small-left small-middle">
+        <div class="div-list">
+            <span class="fl">登录账号:</span>
+            <input type="text" name="mobilephone" class="fl" placeholder="手机号">
+            <p class="warn fl">*账号不对</p>
+        </div>
+        <div class="div-list">
+            <span class="fl">密码:</span>
+            <input type="text" name="password" class="fl" placeholder="密码">
+            <p class="warn">*密码不对</p>
+        </div>
+        <div class="div-list">
+            <span class="fl">验证码:</span>
+            <input style="width:40%"   id="Txtidcode" type="text" class="fl" placeholder="验证码">
+            <span id="idcode"></span>
+        </div>
+        <div class="btn-box">
+            <button id="left-login">登录</button>
+            <a href="" class="fr">忘记密码</a>
+            <a href="" class="fr">注册</a>
+        </div>
+</div>
+    <div class="small-right small-middle">
+        <div class="div-list">
+            <span class="fl">登录账号:</span>
+            <input type="text" name="mobilephone_right" class="fl" placeholder="手机号">
+            <p class="warn fl">*账号不对</p>
+        </div>
+        <div class="div-list">
+            <span class="fl">动态码:</span>
+            <input type="text"  class="fl" placeholder="手机动态码">
+            <button class="send">发送验证码</button>
+        </div>
+        <div class="btn-box">
+            <button id="right-login">登录</button>
+            <a href="" class="fr">忘记密码</a>
+            <a href="" class="fr">注册</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/jquery.idcode.js"></script>
+<script>
+    $(function(){
+        /****small-top****/
+        $('.small-top ul li').click(function () {
+            $(this).addClass('small-motai-li') .siblings().removeClass('small-motai-li');
+            var num=$(this).index();
+            $('.small-middle').eq(num).show().siblings('.small-middle').hide();
+        });
+
+        $.idcode.setCode();
+        var IsBy = $.idcode.validateCode();
+        /* alert(IsBy);*/
+        /*-------------------------------------------*/
+        var InterValObj; //timer变量，控制时间
+        var count = 60; //间隔函数，1秒执行
+        var curCount;//当前剩余秒数
+        var code = ""; //验证码
+        var codeLength = 6;//验证码长度
+        function sendMessage() {
+            curCount = count;
+            var phone=$("#phone").val();//手机号码
+            if(phone != ""){
+                //产生验证码
+                for (var i = 0; i < codeLength; i++) {
+                    code += parseInt(Math.random() * 9).toString();
+                }
+                //设置button效果，开始计时
+                $("#btnSendCode").attr("disabled", "true");
+                $("#btnSendCode").html("请在" + curCount + "秒内输入验证码");
+                InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+            }else{
+                alert("手机号码不能为空！");
+            }
+        }
+        //timer处理函数
+        function SetRemainTime() {
+            if (curCount == 0) {
+                window.clearInterval(InterValObj);//停止计时器
+                $("#btnSendCode").removeAttr("disabled");//启用按钮
+                $("#btnSendCode").html("重新发送验证码");
+                code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效
+            }
+            else {
+                curCount--;
+                $("#btnSendCode").html("请在" + curCount + "秒内输入验证码");
+            }
+        }
+
+        ///****/
+        $('#left-login').click(function () {
+            //check mobilephone
+            var mobilephone=$("input[name='mobilephone']").val();
+            var result=checkMobilephoneFormat(mobilephone);
+            if(!result){
+                $('.small-middle>.div-list').eq(0).find('.warn').show();
+            }else {
+                $('.small-middle>.div-list').eq(0).find('.warn').hide();
+            };
+
+            //check password
+            var password=$("input[name='password']").val();
+            var result=checkPasswordFormat(password);
+            if(!result){
+                $('.small-middle>.div-list').eq(1).find('.warn').show();
+            }else {
+                $('.small-middle>.div-list').eq(1).find('.warn').hide();
+            };
+        });
+
+        $('#right-login').click(function () {
+            //check mobilephone-right
+            var mobilephone=$("input[name='mobilephone_right']").val();
+            var result=checkMobilephoneFormat(mobilephone);
+            if(!result){
+                $('.small-right>.div-list').find('.warn').show();
+            }else {
+                $('.small-right>.div-list').find('.warn').hide();
+            };
+        });
+
+        function checkMobilephoneFormat(mobilephone) {
+            mobilephone = $.trim(mobilephone);
+            // var regular = /^\d{11}$/;
+            var regular = /^1[3|4|5|7|8][0-9]{9}$/;
+            var result = regular.test(mobilephone);
+            return result;
+        }
+
+        function checkPasswordFormat(password) {
+            password = $.trim(password);
+            var regular = /^[0-9a-zA-Z!@#$^]{6,18}$/;
+            var result = regular.test(password);
+            return result;
+        }
+
+    });
+</script>
+</body>
+</html>

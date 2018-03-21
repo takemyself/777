@@ -1,0 +1,231 @@
+@media screen and (min-width: 1200px) {
+    header {
+        width: 100%;
+        height: 140px;
+        background: #000000;
+    }
+
+    header > img {
+        display: block;
+        margin: 0 auto;
+        padding-top: 25px;
+        padding-bottom: 26px;
+    }
+
+    header > div {
+        width: 1200px;
+        margin: 0 auto;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+
+    header ul li {
+        width: 230px;
+        float: left;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    header ul li > a {
+        font-size: 15px;
+        color: white;
+        display: block;
+        width: 100%;
+        line-height: 15px;
+        padding-bottom: 14px;
+    }
+
+    header ul li > a:hover {
+        border-bottom: 4px solid #b59b65;
+        color:white;
+    }
+
+    header ul li .xiala {
+        position: absolute;
+        top: 140px;
+        display: none;
+        z-index: 999;
+    }
+
+    header ul li .xiala div {
+        width: 230px;
+        height: 73px;
+        background: black;
+        font-size: 18px;
+        color: white;
+        line-height: 73px;
+        opacity: 0.7;
+        filter: Alpha(opacity=70);
+    }
+
+    header ul li .xiala div a {
+        color: white;
+        font-size: 18px;
+    }
+
+    header > div > a {
+        margin-left: 10px;
+    }
+
+}
+
+
+/*****/
+.content{
+    width:100%;
+    max-width:970px;
+    margin: 0  auto;
+    overflow: hidden;
+    padding-top:20px;
+    padding-bottom:30px;
+}
+.content ul li{
+    width:33%;
+    float: left;
+    text-align: center;
+    padding-left:5px;
+    padding-right:5px;
+    margin-top:10px;
+}
+.content ul li img{
+    width:100%;
+    height:auto;
+    max-width:290px;
+}
+.content-bottom{
+    width:100%;
+    overflow: hidden;
+    background: black;
+}
+.content-bottom .big-img{
+    max-width:1200px;
+    width:100%;
+    height: auto;
+}
+.content-bottom img{
+    margin:0 auto;
+}
+
+
+
+/****footer**/
+footer{
+    width:100%;
+    height:190px;
+    background: black;
+    text-align: center;
+}
+.footer-top{
+    width:850px;
+    margin: 0 auto;
+    padding-top:40px;
+    font-size:20px;
+    overflow: hidden;
+}
+.footer-top>ul>li{
+    float: left;
+    width:25%;
+}
+.footer-top>ul>li a{
+    color:white;
+    font-size: 15px;
+}
+.footer-center{
+    font-size:18px;
+    color:#7d7d7d;
+    padding-top:25px;
+    margin-bottom:10px;
+}
+.footer-bottom{
+    padding-top:10px;
+}
+.footer-bottom img{
+    margin-left:20px;
+}
+@media screen and (max-width: 1200px) {
+    header{
+        width:100%;
+        height:76px;
+        background: black;
+        position: relative;
+    }
+    .small-xiala{
+        width:330px;
+        height:600px;
+        background:black;
+        opacity: 0.7;
+        filter: Alpha(opacity=70);
+        position: absolute;
+        top:76px;
+        z-index: 999;
+        left:-330px;
+    }
+    .small-xiala>input{
+        width: 271px;
+        height: 35px;
+        border: none;
+        background: #333333;
+        margin-left: -5px;
+        margin-top: 15px;
+        color:white;
+        padding-left:40px;
+    }
+    .small-xiala ul li{
+        padding-left:20px;
+        padding-right:40px;
+    }
+    .small-xiala ul li>a{
+        line-height:55px;
+    }
+    .small-xiala ul li>a{
+        font-size:20px;
+        color:white;
+    }
+    .small-xiala ul li>a>img{
+        margin-top:28px;
+        cursor: pointer;
+    }
+    .small-xiala ul li .small-xiala-index p{
+        margin-top:5px;
+    }
+    .small-xiala ul li .small-xiala-index p a{
+        font-size:14px;
+        color:white;
+        padding-left:10px;
+    }
+    .small-xiala-index{
+        display: none;
+    }
+    .youhua{
+        left:0;
+        transition: all 2s;
+    }
+    .zuohua{
+        left: -330px;
+        transition:all 2s;
+    }
+    /***content**/
+    .content{
+        padding-top:30px;
+        padding-bottom:30px;
+    }
+    /**stay**/
+    .stay img{
+        margin-top: 40px;width: 165px;
+    }
+    .stay input{
+        position: relative;
+        top: 22px;
+        border: none;
+        background: none;
+        border-bottom: 1px solid black;
+        margin-left: 11px;
+        width: 183px;
+    }
+    footer{
+        height:120px;
+    }
+    .footer-center{
+        padding-top:20px;
+    }
+}

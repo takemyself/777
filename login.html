@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/jquery.idcode.css">
+</head>
+<body>
+<div class="big-motai hidden-xs">
+    <div class="big-motai-main">
+        <h6>欢迎回来！请登录</h6>
+        <div class="main-top">
+            <ul>
+                <li class="li-active">普通登录</li>
+                <li>手机动态登录</li>
+            </ul>
+        </div>
+        <div style="display: block;" class="main-left main-middle">
+            <ul>
+                <li>
+                    <input type="text" name="mobilephone" placeholder="手机号"><span class="warn">*手机号不对</span>
+                </li>
+                <li>
+                    <input type="password" name="password" placeholder="密码"><span class="warn">*密码不对</span>
+                </li>
+                <li>
+                    <input style="width:50%"  id="Txtidcode" type="text" placeholder="验证码">
+                    <span id="idcode"></span>
+                </li>
+            </ul>
+            <p><button id="left-login">登录</button></p>
+        </div>
+        <div class="main-right main-middle">
+            <input type="text" name="mobilephone_right" placeholder="手机号"><span class="warn">*手机号不对</span>
+            <input style="width:60%;" type="text" placeholder="手机动态码">
+            <button>发送验证码</button>
+          <!--  <input style="width:55%" type="text" placeholder="验证码">
+            <span id="idcode"></span>-->
+            <button class="login" id="right-login">登录</button>
+        </div>
+        <a href="" class="fr">忘记密码</a>
+        <a href="" class="fr">注册</a>
+    </div>
+</div>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/jquery.idcode.js"></script>
+<script>
+    $(function(){
+        $('.big-motai-main .main-top ul li').click(function () {
+           $(this).addClass('li-active').siblings().removeClass('li-active');
+           var num=$(this).index();
+            $('.main-middle').eq(num).show().siblings('.main-middle').hide();
+        });
+
+        $.idcode.setCode();
+        var IsBy = $.idcode.validateCode();
+       /* alert(IsBy);*/
+        /*-------------------------------------------*/
+        var InterValObj; //timer变量，控制时间
+        var count = 60; //间隔函数，1秒执行
+        var curCount;//当前剩余秒数
+        var code = ""; //验证码
+        var codeLength = 6;//验证码长度
+        function sendMessage() {
+            curCount = count;
+            var phone=$("#phone").val();//手机号码
+            if(phone != ""){
+                //产生验证码
+                for (var i = 0; i < codeLength; i++) {
+                    code += parseInt(Math.random() * 9).toString();
+                }
+                //设置button效果，开始计时
+                $("#btnSendCode").attr("disabled", "true");
+                $("#btnSendCode").html("请在" + curCount + "秒内输入验证码");
+                InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+            }else{
+                alert("手机号码不能为空！");
+            }
+        }
+        //timer处理函数
+        function SetRemainTime() {
+            if (curCount == 0) {
+                window.clearInterval(InterValObj);//停止计时器
+                $("#btnSendCode").removeAttr("disabled");//启用按钮
+                $("#btnSendCode").html("重新发送验证码");
+                code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效
+            }
+            else {
+                curCount--;
+                $("#btnSendCode").html("请在" + curCount + "秒内输入验证码");
+            }
+        }
+
+    ///****/
+        $('#left-login').click(function () {
+            //check mobilephone
+            var mobilephone=$("input[name='mobilephone']").val();
+            var result=checkMobilephoneFormat(mobilephone);
+            if(!result){
+                $('.main-left ul li').eq(0).find('.warn').show();
+            }else {
+                $('.main-left ul li').eq(0).find('.warn').hide();
+            };
+
+            //check password
+            var password=$("input[name='password']").val();
+            var result=checkPasswordFormat(password);
+            if(!result){
+                $('.main-left ul li').eq(1).find('.warn').show();
+            }else {
+                $('.main-left ul li').eq(1).find('.warn').hide();
+            };
+        });
+
+        $('#right-login').click(function () {
+            //check mobilephone-right
+            var mobilephone=$("input[name='mobilephone_right']").val();
+            var result=checkMobilephoneFormat(mobilephone);
+            if(!result){
+                $('.main-right').find('.warn').show();
+            }else {
+                $('.main-right').find('.warn').hide();
+            };
+        });
+
+        function checkMobilephoneFormat(mobilephone) {
+            mobilephone = $.trim(mobilephone);
+            // var regular = /^\d{11}$/;
+            var regular = /^1[3|4|5|7|8][0-9]{9}$/;
+            var result = regular.test(mobilephone);
+            return result;
+        }
+
+        function checkPasswordFormat(password) {
+            password = $.trim(password);
+            var regular = /^[0-9a-zA-Z!@#$^]{6,18}$/;
+            var result = regular.test(password);
+            return result;
+        }
+
+
+    });
+</script>
+</body>
+</html>
